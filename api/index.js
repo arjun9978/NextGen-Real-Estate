@@ -18,6 +18,18 @@ const PORT = process.env.PORT || 3120;
 app.use(express.json());
 app.use(cookieParser());
 
+// Root route
+app.get("/", (req, res) => {
+  res.json({ 
+    message: "✅ NextGen Property Exchange API is running!",
+    endpoints: {
+      users: "/api/user",
+      auth: "/api/auth",
+      listings: "/api/listing"
+    }
+  });
+});
+
 // Routes
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
