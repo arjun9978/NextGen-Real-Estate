@@ -30,18 +30,15 @@ app.use((err, req, res, next) => {
   return res.status(statusCode).json({ success: false, statusCode, message });
 });
 
-const MONGO_URI = "mongodb+srv://real:real@real.5ewanta.mongodb.net/?retryWrites=true&w=majority&appName=real";
+const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://real:real@real.5ewanta.mongodb.net/?retryWrites=true&w=majority&appName=real";
 // MongoDB connection
-mongoose.set("strictQuery", true); // optional, recommended for new Mongoose versions
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.set("strictQuery", true);
+mongoose.connect(MONGO_URI)
 .then(() => console.log("✅ MongoDB Connected"))
 .catch(err => {
   console.error("❌ Failed to connect with MongoDB -->", err.message);
   console.error("Full error:", err);
-  process.exit(1); // exit app if DB connection fails
+  console.log("⚠️  Please check your MongoDB connection string in .env file");
 });
 
 // Start server
